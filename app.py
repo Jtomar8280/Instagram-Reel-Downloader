@@ -1,27 +1,29 @@
-from flask import Flask, request, jsonify, send_file
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from pydantic import BaseModel
 import yt_dlp
 import os
 import uuid
 
-app = Flask(__name__)
+app = FastAPI(title="Instagram Downloader API", version="1.0")
 
 DOWNLOAD_FOLDER = "downloads"
 os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
 
-@app.route("/")
+class VideoRequest(BaseModel):
+    url: str
+
+@app.get("/")
 def home():
-    return jsonify({"message": "Instagram Video Downloader API is running 🚀"})
+    return {"message": "🚀 Instagram Video Downloader API is running"}
 
-@app.route("/download", methods=["POST"])
-def download_video():
+@app.post("/download")
+def download_video(request: VideoRequest):
     try:
-        data = request.get_json()
-        url = data.get("url")
+        if not request.url:
+            raise HTTPException(status_code=400, detail="No URL provided")
 
-        if not url:
-            return jsonify({"error": "No URL provided"}), 400
-
-        # Generate unique filename
+        # Unique filename
         video_id = str(uuid.uuid4())[:8]
         filepath = os.path.join(DOWNLOAD_FOLDER, f"{video_id}.mp4")
 
@@ -33,13 +35,14 @@ def download_video():
 
         # Download video
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
+            ydl.download([request.url])
 
-        return send_file(filepath, as_attachment=True)
+        # Return video file
+        return FileResponse(
+            path=filepath,
+            filename="video.mp4",
+            media_type="video/mp4"
+        )
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+        raise HTTPException(status_code=500, detail=str(e))
