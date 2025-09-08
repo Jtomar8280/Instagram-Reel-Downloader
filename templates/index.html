@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instagram Reel Downloader</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo">
+        <h1>Instagram Reel Downloader</h1>
+        <p class="subtitle">✨ Download Instagram reels instantly and easily ✨<br>⚡ Fast, free, and no registration required ⚡</p>
+    </header>
+
+    <div class="card">
+        <h3>Paste Instagram Reel URL</h3>
+        <input type="text" id="reelUrl" placeholder="https://www.instagram.com/reel/...">
+        <button onclick="previewReel()">👁️ Preview</button>
+        <small>Supported formats: Instagram Reels from public accounts</small>
+    </div>
+
+    <div id="adsSection" class="ads-section hidden">
+        <div class="ads">
+            <strong>Ad 1:</strong> Upgrade your video quality with ReelPro Editor!<br><br>
+            <strong>Ad 2:</strong> Get 20% off on social media growth tools today!
+        </div>
+    </div>
+
+    <div id="videoPreview" class="video-preview hidden"></div>
+
+    <div id="downloadSection" class="download-btn hidden">
+        <a id="downloadBtn" href="#" target="_blank" download>
+            <button>⬇️ Download Reel</button>
+        </a>
+    </div>
+
+    <div class="legal">
+        <p><strong>⚪ Legal Disclaimer:</strong><br>We don’t host or own any content. All rights belong to Instagram & respective creators. This tool only extracts publicly available links.</p>
+    </div>
+
+    <footer>
+        <div>
+            <a href="#">How it works</a> |
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">Contact Us</a>
+        </div>
+        <p>Made with <span class="heart">♥</span> for content creators<br>© 2024 InstaReel Downloader</p>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
